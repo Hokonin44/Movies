@@ -9,18 +9,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
-
-class Movie(models.Model):
-    class Meta:
-        verbose_name = 'Фильм'
-        verbose_name_plural = 'Фильмы'
-    title = models.CharField(max_length=255, verbose_name='названия')
-    descriptions = models.TextField(verbose_name='Описания')
-    tags = models.ManyToManyField(Tag, blank=True, verbose_name='Тэги')
-    # director = models.ManyToManyField(blank=True, verbose_name='Директории')
-    def __str__(self):
-        return self.title
-
 class Director(models.Model):
     class Meta:
         verbose_name = 'Директория'
@@ -29,6 +17,18 @@ class Director(models.Model):
     movies = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name='Фильм')
     def __str__(self):
         return self.director
+
+class Movie(models.Model):
+    class Meta:
+        verbose_name = 'Фильм'
+        verbose_name_plural = 'Фильмы'
+    title = models.CharField(max_length=255, verbose_name='названия')
+    descriptions = models.TextField(verbose_name='Описания')
+    tags = models.ManyToManyField(Tag, blank=True, verbose_name='Тэги')
+    director = models.ManyToManyField(blank=True, verbose_name='Директории')
+    def __str__(self):
+        return self.title
+
 
 
 
@@ -48,3 +48,4 @@ class Review(models.Model):
         verbose_name = 'Отзыв'
     text = models.TextField(verbose_name='Текст')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    
